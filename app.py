@@ -11,7 +11,8 @@ app.css.config.serve_locally = True
 styles = {}
 
 app.layout = html.Div([
-    html.H1('Produção de Alimentos na América Latina'),
+    html.H2('Produção de Alimentos na América Latina'),
+    html.H2('Teste'),
     dcc.Dropdown(
         id='dropdown',
         options=[{'label': i, 'value': i} for i in ['2015','2016', '2017']],
