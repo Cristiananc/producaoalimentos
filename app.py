@@ -42,16 +42,12 @@ styles = {
 }
 
 app.layout = html.Div([
-    html.H2('Produção de Alimentos na América Latina'),
+    html.H2('Produção de Grãos e Cereais na América Latina'),
     dcc.Dropdown(
         id='dropdown',
         options=[{'label': i, 'value': i} for i in ['2015','2016', '2017']],
         value='2015'
     ),
-    html.Div([
-        html.Button("Ver grafo", id='toggle-button'),
-        html.Div(id='toggle-text')
-    ]),
     html.Div(id='display-value'),
     html.Div(className='cy-container', style=styles['cy-container'], children=[
         cyto.Cytoscape(
@@ -85,17 +81,6 @@ app.layout = html.Div([
               [Input('dropdown', 'value')])
 def display_value(value):
     return 'You have selected "{}"'.format(value)
-
-@app.callback(Output('cytoscape', 'responsive'), [Input('toggle-button', 'n_clicks')])
-def toggle_responsive(n_clicks):
-    n_clicks = 2 if n_clicks is None else n_clicks
-    toggle_on = n_clicks % 2 == 0
-    return toggle_on
-
-
-@app.callback(Output('toggle-text', 'children'), [Input('cytoscape', 'responsive')])
-def update_toggle_text(responsive):
-    return '\t' + 'Responsive ' + ('On' if responsive else 'Off')
 
 if __name__ == '__main__':
     app.run_server(debug=True)
