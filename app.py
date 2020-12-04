@@ -49,14 +49,14 @@ app.layout = html.Div([
         value='2015'
     ),
     html.Div([
-        html.Button("Responsive Toggle", id='toggle-button'),
+        html.Button("Ver grafo", id='toggle-button'),
         html.Div(id='toggle-text')
     ]),
     html.Div(id='display-value'),
     html.Div(className='cy-container', style=styles['cy-container'], children=[
         cyto.Cytoscape(
             id='cytoscape',
-            elements=data['elements'],
+            elements= data['elements']['nodes'] + data['elements']['edges'],
             stylesheet=stylesheet,
             style=styles['cytoscape'],
             layout={
