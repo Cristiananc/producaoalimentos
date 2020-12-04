@@ -1,10 +1,13 @@
 import os
+import json
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
+import dash_cytoscape as cyto
 
 app = dash.Dash(__name__)
+app.title = "Producao alimentos"
 server = app.server
 
 app.scripts.config.serve_locally = True
@@ -79,6 +82,8 @@ app.layout = html.Div([
 ])
 @app.callback(Output('display-value', 'children'),
               [Input('dropdown', 'value')])
+def display_value(value):
+    return 'You have selected "{}"'.format(value)
 
 @app.callback(Output('cytoscape', 'responsive'), [Input('toggle-button', 'n_clicks')])
 def toggle_responsive(n_clicks):
@@ -91,7 +96,5 @@ def toggle_responsive(n_clicks):
 def update_toggle_text(responsive):
     return '\t' + 'Responsive ' + ('On' if responsive else 'Off')
 
-def display_value(value):
-    return 'You have selected "{}"'.format(value)
 if __name__ == '__main__':
     app.run_server(debug=True)
