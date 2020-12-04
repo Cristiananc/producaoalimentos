@@ -15,7 +15,25 @@ with open('cy-style.json') as f:
     stylesheet = json.loads(f.read())
 
 
-styles = {}
+styles = {
+    'container': {
+        'position': 'fixed',
+        'display': 'flex',
+        'flex-direction': 'column',
+        'height': '100%',
+        'width': '100%'
+    },
+    'cy-container': {
+        'flex': '1',
+        'position': 'relative'
+    },
+    'cytoscape': {
+        'position': 'absolute',
+        'width': '100%',
+        'height': '100%',
+        'z-index': 999
+    }
+}
 
 app.layout = html.Div([
     html.H2('Produção de Alimentos na América Latina'),
@@ -24,6 +42,10 @@ app.layout = html.Div([
         options=[{'label': i, 'value': i} for i in ['2015','2016', '2017']],
         value='2015'
     ),
+    html.Div([
+        html.Button("Responsive Toggle", id='toggle-button'),
+        html.Div(id='toggle-text')
+    ]),
     html.Div(id='display-value'),
     html.Div(className='cy-container', style=styles['cy-container'], children=[
         cyto.Cytoscape(
@@ -55,6 +77,17 @@ app.layout = html.Div([
 ])
 @app.callback(dash.dependencies.Output('display-value', 'children'),
               [dash.dependencies.Input('dropdown', 'value')])
+
+@app.callback(Output('cytoscape', 'responsive'), [Input('toggle-button', 'n_clicks')])
+def toggle_responsive(n_clicks):
+    n_clicks = 2 if n_clicks is None else n_clicks
+    toggle_on = n_clicks % 2 == 0
+    return toggle_on
+
+
+@app.callback(Output('toggle-text', 'children'), [Input('cytoscape', 'responsive')])
+def update_toggle_text(responsive):
+    return '\t' + 'Responsive ' + ('On' if responsive else 'Off')
 
 def display_value(value):
     return 'You have selected "{}"'.format(value)
