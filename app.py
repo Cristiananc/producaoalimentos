@@ -2,6 +2,8 @@ import os
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
+from dash.dependencies import Input, Output
+
 app = dash.Dash(__name__)
 server = app.server
 
@@ -75,8 +77,8 @@ app.layout = html.Div([
         )
     ])
 ])
-@app.callback(dash.dependencies.Output('display-value', 'children'),
-              [dash.dependencies.Input('dropdown', 'value')])
+@app.callback(Output('display-value', 'children'),
+              [Input('dropdown', 'value')])
 
 @app.callback(Output('cytoscape', 'responsive'), [Input('toggle-button', 'n_clicks')])
 def toggle_responsive(n_clicks):
