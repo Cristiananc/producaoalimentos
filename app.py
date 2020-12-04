@@ -16,6 +16,7 @@ app.css.config.serve_locally = True
 with open('producaoalimentos.json', 'r') as f:
     data = json.loads(f.read())
     
+##https://github.com/plotly/dash-cytoscape/blob/master/demos/data/edge-types/cy-style.json
 with open('cy-style.json') as f:
     stylesheet = json.loads(f.read())
 
